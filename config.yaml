@@ -1,0 +1,29 @@
+# arXiv 配置
+arxiv:
+  # 研究领域类别，参考：https://arxiv.org/category_taxonomy
+  # 例如: cs.AI (人工智能), cs.LG (机器学习), cs.CV (计算机视觉), cs.CL (计算语言学)
+  categories:
+    - cs.AI
+    - cs.LG
+    - cs.CL
+  # 每日获取论文数量
+  max_results: 5
+  # 搜索查询（可选，如果为空则只按分类获取）
+  query: ""
+
+# Ollama 配置
+ollama:
+  # 本地 Ollama API 地址
+  base_url: "http://localhost:11434"
+  # 使用的模型名称
+  model: "qwen3:8b"
+  # 生成参数
+  temperature: 0.7
+  max_tokens: 2000
+
+# 输出配置
+output:
+  # 保存路径
+  save_dir: "./papers"
+  # 是否下载PDF
+  download_pdf: false
