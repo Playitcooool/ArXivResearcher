@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arxiv-researcher"
+version = "0.1.0"
+description = "Engineering-grade arXiv research assistant with Ollama"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "arxiv",
+  "ollama",
+  "python-dateutil",
+  "requests",
+  "PyPDF2",
+  "PyYAML",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+arxiv-researcher = "arxiv_researcher.cli:run"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
