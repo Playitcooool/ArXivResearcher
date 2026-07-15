@@ -18,7 +18,7 @@ ArXivResearcher/
 ├── tests/
 ├── config.yaml
 ├── main.py
-└── requirements.txt
+└── pyproject.toml
 ```
 
 ## 快速开始
@@ -29,7 +29,7 @@ ArXivResearcher/
 cd ArXivResearcher
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e .
 ```
 
 2. 启动 Ollama 并拉取模型

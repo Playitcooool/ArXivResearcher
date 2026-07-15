@@ -4,8 +4,7 @@ import json
 import logging
 from pathlib import Path
 from typing import Any
-
-import requests
+from urllib.request import Request, urlopen
 
 from .models import Paper, SummaryResult
 
@@ -25,12 +24,11 @@ class OllamaClient:
 
     def healthcheck(self) -> tuple[bool, str]:
         try:
-            response = requests.get(f"{self.base_url}/api/tags", timeout=10)
-            response.raise_for_status()
-            payload = response.json()
+            with urlopen(f"{self.base_url}/api/tags", timeout=10) as response:
+                payload = json.load(response)
             models = [m.get("name", "") for m in payload.get("models", [])]
             return True, ", ".join([m for m in models if m])
-        except requests.RequestException as exc:
+        except (OSError, json.JSONDecodeError) as exc:
             return False, str(exc)
 
     def generate(self, prompt: str, temperature: float = 0.7, max_tokens: int = 2000) -> str:
@@ -46,11 +44,15 @@ class OllamaClient:
         }
 
         try:
-            response = requests.post(url, json=data, timeout=self.timeout_seconds)
-            response.raise_for_status()
-            result = response.json()
+            request = Request(
+                url,
+                data=json.dumps(data).encode(),
+                headers={"Content-Type": "application/json"},
+            )
+            with urlopen(request, timeout=self.timeout_seconds) as response:
+                result = json.load(response)
             return str(result.get("response", "")).strip()
-        except requests.RequestException:
+        except (OSError, json.JSONDecodeError):
             logger.exception("ollama generate failed")
             return ""
 

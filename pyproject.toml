@@ -10,10 +10,6 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
   "arxiv",
-  "ollama",
-  "python-dateutil",
-  "requests",
-  "PyPDF2",
   "PyYAML",
 ]
 
